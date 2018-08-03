@@ -6,7 +6,7 @@ import "./Rune.css";
 class Rune extends Component {
     render() {
         return (
-            <div className="rune portrait">
+            <div className="rune landscape">
                 <Routes />
             </div>
         )
