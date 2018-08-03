@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./AppContainer";
+import Rune from "./RuneContainer";
 import "./index.css";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
@@ -33,7 +33,7 @@ export const RUNE_ID = "12341234-1234-1234-1234-123412341234";
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <Rune />
     </Provider>,
     document.getElementById("root")
 );

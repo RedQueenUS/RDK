@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import AppComponent from "./App";
+import Rune from "./Rune";
 
 const mapStateToProps = (state) => {
     return {
@@ -11,4 +11,4 @@ const mapDispatchToProps = {
 
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(Rune);

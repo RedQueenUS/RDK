@@ -2,19 +2,19 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Routes from "./routes";
 
-import "./App.css";
+import "./Rune.css";
 
-class App extends Component {
+class Rune extends Component {
     static propTypes = {
     };
 
     render() {
         return (
-            <div className="App">
+            <div className="Rune">
                 <Routes />
             </div>
         )
     }
 }
 
-export default App;
+export default Rune;
