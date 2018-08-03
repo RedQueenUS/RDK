@@ -4,11 +4,13 @@
 }
 
 .landscape {
-    max-width: 1200px;
-    height: 100%;
+    max-width: 120rem;
+    height: 67.5rem;
+    margin: 0 auto;
 }
 
 .portrait {
-    max-width: 675px;
-    height: 100%;
+    max-width: 67.5rem;
+    height: 120rem;
+    margin: 0 auto;
 }
