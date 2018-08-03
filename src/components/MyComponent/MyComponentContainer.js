@@ -1,12 +1,26 @@
 import { connect } from 'react-redux';
 import MyComponent from './MyComponent';
-
-const mapDispatchToProps = {
-
-}
+import {onClickLeft, onClickRight} from "./MyComponentReducer";
 
 const mapStateToProps = (state, ownProps) => {
-    return state;
+    const {MyComponent} = state;
+    const {clicks} = MyComponent;
+
+    return {
+        clicks
+    };
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onClickLeft: () => {
+            dispatch(onClickLeft());
+        },
+        onClickRight: () => {
+            dispatch(onClickRight());
+        }
+    }
+};
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyComponent);

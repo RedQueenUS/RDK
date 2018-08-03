@@ -1,16 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './AppContainer';
-import './index.css';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
-import { createLogger } from 'redux-logger';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import reducers from './reducers';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./AppContainer";
+import "./index.css";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware, compose } from "redux";
+import { createLogger } from "redux-logger";
+import { composeWithDevTools } from "redux-devtools-extension";
+import reducers from "./reducers";
 import { initialState } from "./store";
-import injectTapEventPlugin from 'react-tap-event-plugin';
+import injectTapEventPlugin from "react-tap-event-plugin";
 
-const composeEnhancers = (process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION__)
+const composeEnhancers = (process.env.NODE_ENV !== "production" && window.__REDUX_DEVTOOLS_EXTENSION__)
     ? composeWithDevTools({
         actionsBlacklist: [/* actions to be ignored in Redux DevTools */]
     })
@@ -35,6 +35,5 @@ ReactDOM.render(
     <Provider store={store}>
         <App />
     </Provider>,
-    document.getElementById('root')
+    document.getElementById("root")
 );
-

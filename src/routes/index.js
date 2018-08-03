@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from 'react'
-import { HashRouter as Router, Route, Switch } from 'react-router-dom'
-import MyComponent from '../components/MyComponent';
+import React, { Component, Fragment } from "react";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import MyComponent from "../components/MyComponent";
 
 export default class Routes extends Component {
     render() {
@@ -12,6 +12,6 @@ export default class Routes extends Component {
                     </Switch>
                 </Router>
             </Fragment>
-        )
+        );
     }
 }

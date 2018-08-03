@@ -1,6 +1,8 @@
 export const initialState = {
     MyComponent: {
-        sortBy: '',
-        sortOrder: '',
+        clicks: {
+            left: 2,
+            right: 3
+        }
     },
 };

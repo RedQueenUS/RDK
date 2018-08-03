@@ -1,8 +1,8 @@
-import { combineReducers } from 'redux'
-import { reducer as myComponentReducer } from '../components/MyComponent/MyComponentReducer';
+import { combineReducers } from "redux";
+import { reducer as MyComponent } from "../components/MyComponent/MyComponentReducer";
 
 const reducers = combineReducers({
-    myComponentReducer
+    MyComponent
 });
 
-export default reducers
+export default reducers;

@@ -14,7 +14,10 @@
   "license": "",
   "private": true,
   "dependencies": {
-    "prop-types": "^15.6.1",
+    "babel-eslint": "^8.2.6",
+    "classnames": "^2.2.5",
+    "eslint-plugin-react": "^7.10.0",
+    "prop-types": "^15.6.2",
     "query-string": "^6.1.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -25,10 +28,10 @@
     "react-tap-event-plugin": "^3.0.2",
     "react-timestamp": "^4.4.0",
     "redux": "^3.6.0",
-    "classnames": "^2.2.5",
     "uuid": "^3.2.1"
   },
   "devDependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "redux-devtools": "^3.4.1",
     "redux-devtools-dock-monitor": "^1.1.2",
     "redux-devtools-extension": "^2.13.2",

@@ -1,17 +1,14 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import Routes from './routes'
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import Routes from "./routes";
 
-import './App.css'
+import "./App.css";
 
 class App extends Component {
     static propTypes = {
-        init: PropTypes.func
     };
-    
-    render() {
-        this.props.init();
 
+    render() {
         return (
             <div className="App">
                 <Routes />
