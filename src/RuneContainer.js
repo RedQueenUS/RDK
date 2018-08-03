@@ -3,7 +3,8 @@ import Rune from "./Rune";
 
 const mapStateToProps = (state) => {
     return {
-        ...state
+        ...state,
+        fish: "swim"
     };
 };
 

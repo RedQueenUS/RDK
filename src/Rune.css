@@ -1,0 +1,14 @@
+.rune {
+    background: #222;
+    color: #eee;
+}
+
+.landscape {
+    max-width: 1200px;
+    height: 100%;
+}
+
+.portrait {
+    max-width: 675px;
+    height: 100%;
+}
