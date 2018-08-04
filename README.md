@@ -2,7 +2,7 @@
 
 ## Notes
 
-### Files to customize:
+### Files to customize (besides `/src`):
 
 - `package.json`
     - `name`
