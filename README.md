@@ -52,6 +52,8 @@ This file connects the stateless component with the redux store. It will consist
 
     src/components/MyComponent/MyComponentReducer.js
 
+##### More Traditional React/Redux Conventions
+
 While Rune Developers are encouraged to use whatever conventions are comfortable to them, the RDK attempts to make building Runes easier for novice developers, by introducing some non-standard conventions. One place this is most obvious in the RDK convention for `Reducers` and `Actions`.
 
 In other React/Redux implementations, `Actions` tend to relate to user behavior, and `Reducers` tend to opperate independently, relative to how they impact the Redux store. For example, toolbar buttons that add Shapes to a Canvas might call these `Action` dispatchers, each of which dispatches an `Action` of type `CREATE_CANVAS_SHAPE`:
@@ -61,6 +63,8 @@ In other React/Redux implementations, `Actions` tend to relate to user behavior,
     onCreateShape("triangle")
 
 Meanwhile, the Canvas component might contain a `Reducer` which is responsible for loading the Redux Store with whatever should be visible on the Canvas. That `Reducer` function might be named `handleCanvasContents()`, it could be responsible for adding or removing Shapes (or anything else) to the Canvas, and it might process every `CREATE_SHAPE` `Action`, and possibly others such as `CREATE_CANVAS_IMAGE`.
+
+##### Rune React/Redux Conventions
 
 However, we recommend approaching Rune development a little differently. When creating a Rune, look for UI elements which which a user is expected to interact, and list each type of interaction a user should be able to perform. Each unique pair of UI element and User Interaction should be given a unique `Action` dispatcher (called `onFunctions`), a dedicated `Action` type (`ACTION_AS_NOUN_WITH_VERB`) and a unique `Reducer` (called `handlerFunctions`).
 
