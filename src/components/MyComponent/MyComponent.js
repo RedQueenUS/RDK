@@ -23,7 +23,7 @@ const MyComponent = (props) => {
 };
 
 
-MyComponent.prototype.propTypes = {
+MyComponent.propTypes = {
     clicks: PropTypes.object,
     onClickLeft: PropTypes.func,
     onClickRight: PropTypes.func,
