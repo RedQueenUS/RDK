@@ -56,9 +56,9 @@ While Rune Developers are encouraged to use whatever conventions are comfortable
 
 In other React/Redux implementations, `Actions` tend to relate to user behavior, and `Reducers` tend to opperate independently, relative to how they impact the Redux store. For example, toolbar buttons that add Shapes to a Canvas might call these `Action` dispatchers, each of which dispatches an `Action` of type `CREATE_CANVAS_SHAPE`:
 
-- onCreateShape("circle")
-- onCreateShape("square")
-- onCreateShape("triangle")
+    onCreateShape("circle")
+    onCreateShape("square")
+    onCreateShape("triangle")
 
 Meanwhile, the Canvas component might contain a `Reducer` which is responsible for loading the Redux Store with whatever should be visible on the Canvas. That `Reducer` function might be named `handleCanvasContents()`, it could be responsible for adding or removing Shapes (or anything else) to the Canvas, and it might process every `CREATE_SHAPE` `Action`, and possibly others such as `CREATE_CANVAS_IMAGE`.
 
