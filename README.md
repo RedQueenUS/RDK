@@ -74,7 +74,7 @@ For example, a `MyButton` UI button, which is intended to be clicked, might call
 
 ##### (Advanced) Example 2
 
-Revisiting the Shapes and Canvas example, the three toolbar buttons would result in 3 `onFunctions`, 3 `Actions`, and 3 `Reducers`.
+Revisiting the Shapes and Canvas example, the three toolbar buttons would result in 3 `onFunction` `Action` dispatchers, 3 `Actions`, and 3 `handleFunction` `Reducers`.
 
 - `onFunctions`
 
