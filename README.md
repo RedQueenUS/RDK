@@ -273,7 +273,11 @@ class MyComponentToolbar extends Component{
   // this.props is supplied action dispatchers, by the connect() call at the bottom of this file.
   render() {
     // Deconstruct the action dispatchers from this.props;
-    const {onCreateShape, onCreateImage} = this.props;
+    const {
+        onClickCreateSquareButton,
+        onClickCreateCircleButton,
+        onClickCreateImageButton
+    } = this.props;
 
     // Return the content to be rendered.
     return (
