@@ -2,7 +2,7 @@
 
 A growing framework based on [React](https://reactjs.org/) and [Redux](https://redux.js.org/).
 
-## Notes
+## 1. Notes
 
 Things get started in `src/index.js`. Ultimately, this file pulls in `src/index.css` and imports the `Rune` component.
 
@@ -21,39 +21,43 @@ Components are made up of several parts. They include:
 
 To keep code organized and easy to read, these pieces are broken down into specific files.
 
-For example, with a componant named `MyComponent`, you can expect the following structure:
+For example, with a componant named `MyComponent`, you can expect this folder `src/components/MyComponent` and it will contain the following files:
 
-### Component Directory
+- Default Export:
 
-    src/components/MyComponent/
+    `index.js`
 
-### Default Export
+    For easy importing, this file aliases the default export for the component. In most cases, this is the `default` export from `MyComponentContainer.js`
 
-    src/components/MyComponent/index.js
+Stateless Function:
+    MyComponent.js
 
-For easy importing, this file aliases the default export for the component. In most cases, this is the `default` export from `MyComponentContainer.js`
+    This file should contain a stateless function, consisting primarily of JSX.
 
-### Stateless Function
+Styling:
+    MyComponent.css
 
-    src/components/MyComponent/MyComponent.js
+Redux Container:
+    MyComponentContainer.js
 
-This file should contain a stateless function, consisting primarily of JSX.
+    This file connects the stateless component with the Redux Store. It will consist of: a `mapStateToProps(state, ownProps)`
+    function and a `mapDispatchToProps(dispatch)` function. These functions are both connected to Redux through a call to
+    `connect(mapStateToProps, mapDispatchToProps)(statelessComponent)`.
 
-### Styling
+Reducer & Actions:
+    MyComponentReducer.js
 
-    src/components/MyComponent/MyComponent.css
+| Filename | Purpose | Details |
+| --- | --- | --- |
+| `index.js` | Default Export | For easy importing, this file aliases the default export for the component. In most cases, this is the `default` export from `MyComponentContainer.js` |
+| `MyComponent.js` | Stateless Function | This file should contain a stateless function, consisting primarily of JSX. |
+| `MyComponent.css` | Styling | |
+| `MyComponentContainer.js` | Redux Container | Connects the stateless function with the Redux Store. `connect(mapStateToProps, mapDispatchToProps)(statelessFunction)` |
+| `MyComponentReducer.js` | Reducer & Actions | |
 
-### Container
+## 1.2 Rune Component Conventions
 
-    src/components/MyComponent/MyComponentContainer.js
-
-This file connects the stateless component with the Redux Store. It will consist of: a `mapStateToProps(state, ownProps)` function and a `mapDispatchToProps(dispatch)` function. These functions are both connected to Redux through a call to `connect(mapStateToProps, mapDispatchToProps)(statelessComponent)`.
-
-### Reducer & Actions
-
-    src/components/MyComponent/MyComponentReducer.js
-
-#### More Traditional React/Redux Conventions
+### 1.2.1 More Traditional React/Redux Conventions
 
 While Rune Developers are encouraged to use whatever conventions are comfortable to them, the RDK attempts to make building Runes easier for novice developers, by introducing some non-standard conventions. One place this is most obvious is the RDK's convention for Redux `Reducers` and `Actions`.
 
@@ -199,7 +203,7 @@ Take note how a single `Action` Dispatcher (`onCreateShape`) is reused to create
 
 In this way, the defined `Actions` focus on what the user is trying to do (create a new thing) and the `Reducers` focus on how to update the Redux State to reflect what the user is trying to accomplish (adding a new thing to the canvasContents array).
 
-#### Rune React/Redux Conventions
+### 1.2.2 Rune React/Redux Conventions
 
 To simplify the things new Runecrafters need to master before they can get started, we've created what we believe to be some simplified conventions.
 
@@ -243,7 +247,7 @@ Fortunately, these conventions map to established Redux principles:
 - UI Event Dispatchers are the functions typically exported from a Redux `actions` library, and should return an object with at least a `type` property.
 - UI Event Handlers are the Redux reducer functions a Redux developer is already familiar with.
 
-#### Example UIE Implementation
+### 1.2.3 Example UIE Implementation
 
 Here's a React Component that's very similiar to the one in the previous example:
 
@@ -423,69 +427,28 @@ This convention simplifies tracing a User Behavior through the application, ensu
 
 Finally, while React has implemented things such as the Context API, and Redux is often more power than might be necessary, this approach reduces learning barriers for new developers, by teaching a single consistent way for handling both local and global scopes, without having to learn multiple techniques and the nuanced situations when to use each. Meanwhile, experienced developers and highly complex Runes are encouraged to employ whatever patterns and conventions are comfortable and efficient.
 
-## 1.2 Your Code Goes Here
+## 1.3 Your Code Goes Here
 
-    src/
-There's a suggested structure for your files, but you do you at your own peril. If you do it your way and it works, please pat yourself on the back, give yourself a belly rub, and then consider sharing it with the community!
+We suggest the following structure for your files, but you do you (at your own peril). If you do it your way and it works, please pat yourself on the back, give yourself a belly rub, and then consider sharing it with the community!
 
-## 1.2.1 Suggested `src/` Structure
+Here's how we break down our `src/` folder:
+| Folder | Purpose | Details |
+| --- | --- | --- |
+| `src/assets/` | Images And Other Stuff | Your project is going to have images, they probably go here. If for some reason they don't go here, they might go in the `public/` folder that sits next to `src/`. If that's confusing, do whatever feels comfortable. |
+| `src/components/` | The Room Where It Happens | React Components go here. Most of your code will go here. Etch your Runes upon this land and make Magic for all to see! (Please always use Magic resposibly.) |
+| `src/reducers/` | Reducer Management | Components that use Reducers need to be added to the `index.js` file in this folder, to get connected to the Redux Store. |
+| `src/routes/` | Rune Pages | Yes, we know the folder is named `routes`. Yes, we agree `pages` would be a better name. But that's not its name. Its name is `routes`. |
+| `src/store/` | Redux Store | When your Rune starts, it will probably need to have some values initialized and already seeded on the Redux Store. That happens in here. |
+| `src/utils/` | Friendly Conveniences | I dream of a day when someone can `npm install rqrdk` and incorporate pieces of the RDK in other projects. This is not that day. However, this folder contains what might some day become that dream.  |
+| `src/index.css` | Master Styles | At the time of this writing, you probably don't need to mess with this file, unless you're super awesome and know why you'd want to mess with this file. Being super awesome does have its perks. |
+| `src/index.js` | Scaffolding | Unless words like `middleware`, `saga`, or `thunk` mean something to you, this file probably isn't very interesting. |
+| `src/Rune.css` | Themeing | This is a great place to make your Rune pretty. We highly suggest you make it pretty because you're worth it. |
+| `src/Rune.js` | Root Component | This is where you configure `portrait` or `landscape` mode. (Update the `className` attribute on line `9`.) Otherwise, this is essentially the root of your project, but it immediately kicks off the Routes (Read: "Pages") located in the `src/routes/` folder, so you probably don't want to mess around much with this one. |
+| `src/RuneContainer.js` | Connect Redux | The word "Container" is essentially an indicator that something is connected to the Redux Store. Everything ___can___ be connected, anything ___could___ be connected, not everything ___will___ be connected. This file connects the Rune to the Redux Store, which is initialized in `src/store/`. |
 
-### Images And Other Stuff
+## 1.4 FYI and Friendly Reminders
 
-    src/assets/
-Your project is going to have images, they probably go here. If for some reason they don't go here, they might go in the `public/` folder that sits next to `src/`. If that's confusing, do whatever feels comfortable.
-
-### The Room Where It Happens
-
-    src/components/
-React Components go here. Most of your code will go here. Etch your Runes upon this land and make Magic for all to see! (Please always use Magic resposibly.)
-
-### Component Hookup
-
-    src/reducers/
-Components that use Reducers need to be added to the `index.js` file in this folder, to get connected to the Redux store.
-
-### Rune Pages
-
-    src/routes/
-Yes, we know the folder is named `routes`. Yes, we agree `pages` would be a better name. But that's not its name. Its name is `routes`.
-
-### Data
-
-    src/store/
-When your Rune starts, it will probably need to have some values initialized and already seeded on the Redux Store. That happens in here.
-
-### Friendly Conveniences
-
-    src/utils/
-I dream of a day when someone can `npm install rqrdk` and incorporate pieces of the RDK in other projects. This folder contains what might some day become that dream. 
-
-### Master Styles
-
-    src/index.css
-At the time of this writing, you probably don't need to mess with this file, unless you're super awesome and know why you'd want to mess with this file. Being super awesome does have its perks.
-
-### Scaffolding
-
-    src/index.js
-Unless words like `middleware`, `saga`, or `thunk` mean something to you, this file probably isn't very interesting.
-
-### Themeing
-
-    src/Rune.css
-This is a great place to make your Rune pretty. We highly suggest you make it pretty because you're worth it.
-
-### Kickstart the Whole Shebang
-
-    src/Rune.js
-This is where you configure `portrait` or `landscape` mode. (Update the `className` attribute on line `9`.) Otherwise, this is essentially the root of your project, but it immediately kicks off the Routes (Read: "Pages") located in the `src/routes/` folder, so you probably don't want to mess around much with this one.
-
-    src/RuneContainer.js
-The word "Container" is essentially an indicator that something is connected to the Redux Store. Everything ___can___ be connected, anything ___could___ be connected, not everything ___will___ be connected. This file connects the Rune to the Redux Store, which is initialized in `src/store/`.
-
-## 1.3 FYI and Friendly Reminders
-
-## 1.3.1 Rune Package
+### 1.4.1 Rune Package
 
     /package.json
 Make sure to update these values:
@@ -496,7 +459,7 @@ Make sure to update these values:
 - `version`
 - `keywords`
 
-## 1.3.2 Play Nice With Mobile
+### 1.4.2 Play Nice With Mobile
 
     /public/manifest.json
 Make sure to update these values:
@@ -504,7 +467,7 @@ Make sure to update these values:
 - `name`
 - `short_name`
 
-## 1.3.3 Metas, Title, Scripts & Styles
+### 1.4.3 Metas, Title, Scripts & Styles
 
 `public/index.html`
 Make sure to update these values:
@@ -513,3 +476,11 @@ Make sure to update these values:
 - `meta` : `application-name`
 - `title`
 - add `<link>` and `<script>` tags where appropriate
+
+## 2. Getting Started
+
+Congratulations! You're ready to begin building your Rune! The first thing you'll want to do is checkout this repository. Then navigate your command line to where you placed the files and run:
+```sh
+$ npm install
+$ npm start
+```
