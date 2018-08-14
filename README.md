@@ -411,17 +411,17 @@ Here's how we break down our `src/` folder:
 
 | Folder | Purpose | Details |
 | --- | --- | --- |
-| `src/assets/` | Images And Other Stuff | Your project is going to have images, they probably go here. If for some reason they don't go here, they might go in the `public/` folder that sits next to `src/`. If that's confusing, do whatever feels comfortable. |
-| `src/components/` | The Room Where It Happens | React Components go here. Most of your code will go here. Etch your Runes upon this land and make Magic for all to see! (Please always use Magic resposibly.) |
-| `src/reducers/` | Reducer Management | Components that use Reducers need to be added to the `index.js` file in this folder, to get connected to the Redux Store. |
-| `src/routes/` | Rune Pages | Yes, we know the folder is named `routes`. Yes, we agree `pages` would be a better name. But that's not its name. Its name is `routes`. |
-| `src/store/` | Redux Store | When your Rune starts, it will probably need to have some values initialized and already seeded on the Redux Store. That happens in here. |
-| `src/utils/` | Friendly Conveniences | I dream of a day when someone can `npm install rqrdk` and incorporate pieces of the RDK in other projects. This is not that day. However, this folder contains what might some day become that dream.  |
-| `src/index.css` | Master Styles | At the time of this writing, you probably don't need to mess with this file, unless you're super awesome and know why you'd want to mess with this file. Being super awesome does have its perks. |
-| `src/index.js` | Scaffolding | Unless words like `middleware`, `saga`, or `thunk` mean something to you, this file probably isn't very interesting. |
-| `src/Rune.css` | Themeing | This is a great place to make your Rune pretty. We highly suggest you make it pretty because you're worth it. |
-| `src/Rune.js` | Root Component | This is where you configure `portrait` or `landscape` mode. (Update the `className` attribute on line `9`.) Otherwise, this is essentially the root of your project, but it immediately kicks off the Routes (Read: "Pages") located in the `src/routes/` folder, so you probably don't want to mess around much with this one. |
-| `src/RuneContainer.js` | Connect Redux | The word "Container" is essentially an indicator that something is connected to the Redux Store. Everything ___can___ be connected, anything ___could___ be connected, not everything ___will___ be connected. This file connects the Rune to the Redux Store, which is initialized in `src/store/`. |
+| `assets/` | Images And Other Stuff | Your project is going to have images, they probably go here. If for some reason they don't go here, they might go in the `public/` folder that sits next to `src/`. If that's confusing, do whatever feels comfortable. |
+| `components/` | The Room Where It Happens | React Components go here. Most of your code will go here. Etch your Runes upon this land and make Magic for all to see! (Please always use Magic resposibly.) |
+| `reducers/` | Reducer Management | Components that use Reducers need to be added to the `index.js` file in this folder, to get connected to the Redux Store. |
+| `routes/` | Rune Pages | Yes, we know the folder is named `routes`. Yes, we agree `pages` would be a better name. But that's not its name. Its name is `routes`. |
+| `store/` | Redux Store | When your Rune starts, it will probably need to have some values initialized and already seeded on the Redux Store. That happens in here. |
+| `utils/` | Friendly Conveniences | I dream of a day when someone can `npm install rqrdk` and incorporate pieces of the RDK in other projects. This is not that day. However, this folder contains what might some day become that dream.  |
+| `index.css` | Master Styles | At the time of this writing, you probably don't need to mess with this file, unless you're super awesome and know why you'd want to mess with this file. Being super awesome does have its perks. |
+| `index.js` | Scaffolding | Unless words like `middleware`, `saga`, or `thunk` mean something to you, this file probably isn't very interesting. |
+| `Rune.css` | Themeing | This is a great place to make your Rune pretty. We highly suggest you make it pretty because you're worth it. |
+| `Rune.js` | Root Component | This is where you configure `portrait` or `landscape` mode. (Update the `className` attribute on line `9`.) Otherwise, this is essentially the root of your project, but it immediately kicks off the Routes (Read: "Pages") located in the `src/routes/` folder, so you probably don't want to mess around much with this one. |
+| `RuneContainer.js` | Connect Redux | The word "Container" is essentially an indicator that something is connected to the Redux Store. Everything ___can___ be connected, anything ___could___ be connected, not everything ___will___ be connected. This file connects the Rune to the Redux Store, which is initialized in `src/store/`. |
 
 ## 1.4 FYI and Friendly Reminders
 
