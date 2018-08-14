@@ -2,9 +2,11 @@
 
 A growing framework based on [React](https://reactjs.org/) and [Redux](https://redux.js.org/).
 
-## 1 Notes
+## Notes
 
 Things get started in `src/index.js`. Ultimately, this file pulls in `src/index.css` and imports the `Rune` component.
+
+The `Rune` component sets whether the Rune should load in `landscape` or `portrait` mode, and then engages the `Routes` defined in `src/routes/index.js`. The `Routes` control which components load, based on which "page" the user is attempting to view. Since most `Runes` should be a Single Page App (SPA), usually the only reason to change this file is to replace which React Component the default `Route` loads out of the box.
 
 ## 1.1 Component Structure
 
@@ -45,7 +47,7 @@ This file should contain a stateless function, consisting primarily of JSX.
 
     src/components/MyComponent/MyComponentContainer.js
 
-This file connects the stateless component with the Redux Store. It will consist of a `mapStateToProps(state, ownProps)` function and a `mapDispatchToProps(dispatch)` function. These functions are both connected to Redux through a call to `connect(mapStatesToProps, mapDispatchToProps)(statelessComponent)`.
+This file connects the stateless component with the Redux Store. It will consist of: a `mapStateToProps(state, ownProps)` function and a `mapDispatchToProps(dispatch)` function. These functions are both connected to Redux through a call to `connect(mapStateToProps, mapDispatchToProps)(statelessComponent)`.
 
 ### Reducer & Actions
 
@@ -53,69 +55,369 @@ This file connects the stateless component with the Redux Store. It will consist
 
 #### More Traditional React/Redux Conventions
 
-While Rune Developers are encouraged to use whatever conventions are comfortable to them, the RDK attempts to make building Runes easier for novice developers, by introducing some non-standard conventions. One place this is most obvious in the RDK convention for `Reducers` and `Actions`.
+While Rune Developers are encouraged to use whatever conventions are comfortable to them, the RDK attempts to make building Runes easier for novice developers, by introducing some non-standard conventions. One place this is most obvious is the RDK's convention for Redux `Reducers` and `Actions`.
 
-In other React/Redux implementations, `Actions` tend to relate to user behavior, and `Reducers` tend to opperate independently, relative to how they impact the Redux store. For example, toolbar buttons that add Shapes to a Canvas might call these `Action` dispatchers, each of which dispatches an `Action` of type `CREATE_CANVAS_SHAPE`:
+In other Redux implementations, `Actions` tend to relate to user behavior:
 
-    onCreateShape("circle")
-    onCreateShape("square")
-    onCreateShape("triangle")
+```jsx
+/**
+  Actions
+  
+  Typically located in:
+    src/actions/index.js
+  or
+    src/actions/MyComponentActions.js
+  or
+    src/components/MyComponent/MyComponentActions.js
+*/
 
-Meanwhile, the Canvas component might contain a `Reducer` which is responsible for loading the Redux Store with whatever should be visible on the Canvas. That `Reducer` function might be named `handleCanvasContents()`, it could be responsible for adding or removing Shapes (or anything else) to the Canvas, and it might process every `CREATE_SHAPE` `Action`, and possibly others such as `CREATE_CANVAS_IMAGE`.
+// Type Constants
+export const CREATE_CANVAS_SHAPE = "CREATE_CANVAS_SHAPE";
+export const CREATE_CANVAS_IMAGE = "CREATE_CANVAS_IMAGE";
+
+// Action Dispatcher
+export function onCreateShape(shapeType) {
+  return {
+    type: CREATE_CANVAS_SHAPE,
+    data: shapeType
+  };
+}
+
+// Action Dispatcher
+export function onCreateImage(imageUrl) {
+  return {
+    type: CREATE_CANVAS_SHAPE,
+    data: imageUrl
+  };
+}
+```
+
+And `Reducers` tend to opperate independently, relative to how they impact the Redux store:
+
+```jsx
+/**
+  Reducers
+  
+  Typically located in:
+    src/reducers/index.js
+  or
+    src/reducers/MyComponentReducer.js
+  or
+    src/components/MyComponent/MyComponentReducer.js
+*/
+
+// Import Imaginary Canvas Object Classes
+import { CanvasShape, CanvasImage } from "../models/Canvas";
+
+// Import Action Type constant
+import { CREATE_CANVAS_SHAPE, CREATE_CANVAS_IMAGE } from "./MyComponentActions";
+
+// Define reducer task functions
+function handleAddCanvasContent(state, objectType, objectDetails) {
+  const objectClass = (objectType === "SHAPE") ? CanvasShape : CanvasImage;
+  const newObject = new objectClass(objectDetails);
+  
+  return {
+    ...state,
+    canvasContents: [
+      ...state.canvasContents,
+      newObject
+    ]
+  };
+}
+
+// Export main reducer function
+export const reducer = (state = {}, action) => {
+  switch(action.type) {
+    case CREATE_CANVAS_SHAPE:
+      return handleAddCanvasContent(state, "SHAPE", action.data);
+    case CREATE_CANVAS_IMAGE:
+      return handleAddCanvasContent(state, "IMAGE", action.data);
+    default:
+      return state;
+  }
+};
+```
+
+Together, they might be used in a component, like this:
+
+```jsx
+/**
+  Components & Sub-components
+  
+  Typically located in:
+    src/components/MyComponent/MyComponentToolbar.js
+
+  (And then imported and used inside:
+    src/components/MyComponent/index.js
+  or
+    src/components/MyComponent/MyComponent.js
+  )
+*/
+
+// Import React and Redux dependencies
+import React { Component } from "react";
+import { connect } from "redux";
+
+// Import Action Dispatchers
+import {onCreateShape, onCreateImage} from "./MyComponentActions";
+
+// Define class to contain React Component, and extend base Component class
+class MyComponentToolbar extends Component{
+  
+  // Components require a render() function, which has access to: this.props.
+  // this.props is supplied action dispatchers, by the connect() call at the bottom of this file.
+  render() {
+    // Deconstruct the action dispatchers from this.props;
+    const {onCreateShape, onCreateImage} = this.props;
+
+    // Return the content to be rendered.
+    return (
+      <div>
+        <button onClick={onCreateShape("square")}>Create Square</button>
+        <button onClick={onCreateShape("circle")}>Create Circle</button>
+        <button onClick={onCreateImage("myFavoriteImage.jpg")}>Create Image</button>
+      </div>
+    );
+  }
+}
+
+// Simple example implementation
+//   mapStateToProps is a fundemental piece of Redux's implementation pattern.
+function mapStateToProps(state = {}, ownProps = {}) {
+  return state;
+}
+
+// Export the React Component
+export default connect(mapStateToProps, {
+  onCreateShape,
+  onCreateImage
+})(MyComponentToolbar);
+```
+
+Take note how a single `Action` Dispatcher (`onCreateShape`) is reused to create two different types of shapes. Also observe that there is only one `Reducer` Task and it's used to add both shapes and images to the imaginary canvas.
+
+In this way, the defined `Actions` focus on what the user is trying to do (create a new thing) and the `Reducers` focus on how to update the Redux State to reflect what the user is trying to accomplish (adding a new thing to the canvasContents array).
 
 #### Rune React/Redux Conventions
 
-However, we recommend approaching Rune development a little differently. When creating a Rune, look for UI elements which which a user is expected to interact, and list each type of interaction a user should be able to perform. Each unique pair of UI element and User Interaction should be given a unique `Action` dispatcher (called `onFunctions`), a dedicated `Action` type (`ACTION_AS_NOUN_WITH_VERB`) and a unique `Reducer` (called `handlerFunctions`).
+To simplify the things new Runecrafters need to master before they can get started, we've created what we believe to be some simplified conventions.
 
-##### (Simple) Example 1
+When creating a Rune, Runecrafters should identify User Interaction Events (UIE) they would like their Rune to support. A UIE consists of a UI element (noun) and event (verb). As a matter of style, these events are usually named after HTML counterparts, start with the word "on", and are followed by a description of the event that occurred.
 
-For example, a `MyButton` UI button, which is intended to be clicked, might call the function: `onMyButtonClicked()` which dispatches an `Action` of type `MY_BUTTON_CLICKED`, and triggers the `Reducer`: `handleMyButtonClicked()`. Notice that the difference between these two functions is their prefix `on` and `handle`. This convention, while not necessarily maximally efficient, simplifies tracing a User Behavior through the application, ensuring any one interaction calls a predictable `Action` dispatcher, which dispatches an `Action` with a predictable type, and it can be expected to trigger a predictable `Reducer`. Further, since these functions are so tightly coupled and similarly named, we recommend that the `onFunction`, `handleFunction` and `Action` type constant, all be placed in the `*Reducers.js` file, adjacent to one another.
+These nouns and verbs then get combined to create names for the 3 pieecs that make up a UIE definition:
 
-##### (Advanced) Example 2
+- UI Event Type Constant (aka "Event Type"): VERB_NOUN
+- UI Event Dispatcher (aka "onFunction"): onVerbNoun
+- UI Event Handler (aka "handleFunction"): handleVerbNoun
 
-Revisiting the Shapes and Canvas example, the three toolbar buttons would result in 3 `onFunction` `Action` dispatchers, 3 `Actions`, and 3 `handleFunction` `Reducers`.
+For example, here's a list created for a Rune with a button and a text input field:
 
-- `onFunctions`
+- Noun: `<input id="buildFormula" type="text" />` (buildFormulaText)
+  - Verb: `onChange`
+  - Verb: `onLoseFocus`
+- Noun: `<button>Compute</button>` (computeButton)
+  - Verb: `onClick`
 
-        onCreateCircleToolbarButtonClicked
-        onCreateSquareToolbarButtonClicked
-        onCreateTriangleToolbarButtonClicked
+When a user changes the value of the `buildFormulaText`:
 
-- Action Types:
+- UI Event Type Constant: `CHANGE_BUILD_FORMULA_TEXT`
+- UI Event Dispatcher: `onChangeBuildForumlaText`
+- UI Event Handler: `handleChangeBuildForumlaText`
 
-        CREATE_CIRCLE_TOOLBAR_BUTTON_CLICKED
-        CREATE_SQUARE_TOOLBAR_BUTTON_CLICKED
-        CREATE_TRIANGLE_TOOLBAR_BUTTON_CLICKED
+When a user's focus leaves the `buildFormulaText`:
 
-- `handleFunctions`
+- UI Event Type Constant: `LOSE_FOCUS_BUILD_FORMULA_TEXT`
+- UI Event Dispatcher: `onLoseFocusBuildFormulaText`
+- UI Event Handler: `handleLoseFocusBuildFormulaText`
 
-        handleCreateCircleToolbarButtonClicked
-        handleCreateSquareToolbarButtonClicked
-        handleCreateTriangleToolbarButtonClicked
+When a user clicks the `computeButton`:
 
-Hopefully it will be obvious that one of these sets might be implemented thusly:
+- UI Event Type Constant: `CLICK_COMPUTE_BUTTON`
+- UI Event Dispatcher: `onClickComputeButton`
+- UI Event Handler: `handleClickComputeButton`
 
-The UI element defiend by this JSX
+Fortunately, these conventions map to established Redux principles:
 
-    <button onClick={onCreateCircleToolbarButtonClicked}>Create Circle</button>
+- UI Event Type Constants are the value supplied to the `action.type` property required on every Redux event.
+- UI Event Dispatchers are the functions typically exported from a Redux `actions` library, and should return an object with at least a `type` property.
+- UI Event Handlers are the Redux reducer functions a Redux developer is already familiar with.
 
-Calls this `Action` Dispatcher
+#### Example UIE Implementation
 
-    onCreateCircleToolbarButtonClicked()
+Here's a React Component that's very similiar to the one in the previous example:
 
-Which dispatches an `Action` of Type
+NOTE: This is a simplified implementation, so it includes the `Stateless Component` and the `Export` both in `index.js` instead of breaking them into 2 files. This is perfectly acceptable if you prefer this method.
 
-    CREATE_CIRCLE_TOOLBAR_BUTTON_CLICKED
+```jsx
+/**
+  Simple React Component
+    src/components/MyComponent/index.js
+*/
 
-Which triggers this `Reducer` `handleFunction`:
+// Import React and Redux dependencies
+import React { Component } from "react";
+import { connect } from "redux";
 
-    handleCreateCircleToolbarButtonClicked()
+// Import Action Dispatchers
+import {
+    onClickCreateSquareButton,
+    onClickCreateCircleButton,
+    onClickCreateImageButton
+} from "./MyComponentActions";
 
-### Why We Did This
+// Define class to contain React Component, and extend base Component class
+class MyComponentToolbar extends Component{
+  
+  // Components require a render() function, which has access to: this.props.
+  // this.props is supplied action dispatchers, by the connect() call at the bottom of this file.
+  render() {
+    // Deconstruct the action dispatchers from this.props;
+    const {onCreateShape, onCreateImage} = this.props;
 
-There are several reasons for this convention. First, grouping the `Action` dispatcher, `Action` type constant,and the `Reducer` function close together ensures that should one of them need to have their names changed, the corresponding pieces are easy to find and resynchrnize. Further, the consistent naming convention will ease development and integration of community-supported components. Additionally, since all of the files related to a UI compnent live in a compartmentalized domain-driven folder structure, components are likely to be self-contained and easily dragged from one project to another.
+    // Return the content to be rendered.
+    return (
+      <div>
+        <button onClick={onClickCreateSquareButton}>Create Square</button>
+        <button onClick={onClickCreateCircleButton}>Create Circle</button>
+        <button onClick={onClickCreateImageButton("myFavoriteImage.jpg")}>Create Image</button>
+      </div>
+    );
+  }
+}
 
-Finally, while React has implemented things such as the Context API, and Redux is often more power than might be necessary, this approach reduces learning barriers for new developers, by teaching a single consistent way for handling both local and global scopes, without having to learn two techniques, and the nuanced situations when to use each. Meanwhile, experienced developers and highly complex Runes are encouraged to employ whatever patterns and conventions are comfortable and efficient.
+// Simple example implementation
+//   mapStateToProps is a fundemental piece of Redux's implementation pattern.
+function mapStateToProps(state = {}, ownProps = {}) {
+  return state;
+}
+
+// Export the React Component
+export default connect(mapStateToProps, {
+    onClickCreateSquareButton,
+    onClickCreateCircleButton,
+    onClickCreateImageButton
+})(MyComponentToolbar);
+```
+
+Notice that instead of a single `onCreateShape` Action Dispatcher, there are now two dedicated Dispatchers: one for creating a square (`onClickCreateSquare`), and a different one for creating a circle (`onClickCreateCircle`). Also, instead of the `Action` Dispatchers explaining what the user is trying to do, now they explain what the User actually did: click a specific thing.
+
+To make this work, this component would be coupled with comparable `Actions` and `Reducers` combined in a single `MyComponentReducer.js` file, as shown below:
+
+```jsx
+/**
+  Actions & Reducers
+    src/components/MyComponent/MyComponentReducer.js
+*/
+
+// Import Imaginary Canvas Object Classes
+import { CanvasShape, CanvasImage } from "../models/Canvas";
+
+/**
+ * User Interaction Events
+ *    UI Event Type Constant (Redux Action Type)
+ *    UI Event Dispatcher (Redux Action)
+ *    UI Event Handler (Redux Reducer)
+ */
+
+/* **** **** ****
+    When the user clicks the Create Square Button:
+ */
+
+// Event Type (Redux Action Type)
+export const CLICK_CREATE_SQUARE_BUTTON = "CLICK_CREATE_SQUARE_BUTTON";
+
+// onFunction (Redux Action Dispatcher)
+export function onClickCreateSquareButton() {
+  return {
+    type: CLICK_CREATE_SQUARE_BUTTON
+  };
+}
+
+// handleFunction (Redux Reducer)
+function handleClickCreateSquareButton(state, action) {
+  return {
+    ...state,
+    canvasContents: [
+      ...state.canvasContents,
+      new CanvasShape("square")
+    ]
+  };
+}
+
+
+/* **** **** ****
+    When the user clicks the Create Circle Button:
+ */
+
+// Event Type (Redux Action Type)
+export const CLICK_CREATE_CIRCLE_BUTTON = "CLICK_CREATE_CIRCLE_BUTTON";
+
+// onFunction (Redux Action Dispatcher)
+export function onClickCreateCircleButton() {
+  return {
+    type: CLICK_CREATE_CIRCLE_BUTTON
+  };
+}
+
+// handleFunction (Redux Reducer)
+function handleClickCreateCircleButton(state, action) {
+  return {
+    ...state,
+    canvasContents: [
+      ...state.canvasContents,
+      new CanvasShape("circle");
+    ]
+  };
+}
+
+
+/* **** **** ****
+    When the user clicks the Create Image Button:
+ */
+
+// Event Type (Redux Action Type)
+export const CLICK_CREATE_IMAGE_BUTTON = "CLICK_CREATE_IMAGE_BUTTON";
+
+// onFunction (Redux Action Dispatcher)
+export function onClickCreateImageButton(imageUrl) {
+  return {
+    type: CLICK_CREATE_IMAGE_BUTTON,
+    data: {
+      imageUrl
+    }
+  };
+}
+
+// handleFunction (Redux Reducer)
+function handleClickCreateImageButton(state, action) {
+  return {
+    ...state,
+    canvasContents: [
+      ...state.canvasContents,
+      new CanvasImage(action.imageUrl)
+    ]
+  };
+}
+
+// Export main reducer function
+export const reducer = (state = {}, action) => {
+  switch(action.type) {
+    case CLICK_CREATE_SQUARE_BUTTON:
+      return handleClickCreateSquareButton(state, action);
+    case CLICK_CREATE_CIRCLE_BUTTON:
+      return handleClickCreateCircleButton(state, action);
+    case CLICK_CREATE_IMAGE_BUTTON:
+      return handleClickCreateImageButton(state, action);
+    default:
+      return state;
+  }
+};
+```
+
+This convention simplifies tracing a User Behavior through the application, ensuring any one User Interaction will dispatch a predictable `Action` and it can be expected to trigger a predictable `Reducer`. Further, since these functions are so tightly coupled and similarly named, we recommend placing the `Event Type`, `onFunction`, and `handleFunction` in the `*Reducers.js` file, adjacent to one another. This ensures that if a developer changes one, they will likely notice the other two and be able to keep them all in sync.
+
+Finally, while React has implemented things such as the Context API, and Redux is often more power than might be necessary, this approach reduces learning barriers for new developers, by teaching a single consistent way for handling both local and global scopes, without having to learn multiple techniques and the nuanced situations when to use each. Meanwhile, experienced developers and highly complex Runes are encouraged to employ whatever patterns and conventions are comfortable and efficient.
 
 ## 1.2 Your Code Goes Here
 
