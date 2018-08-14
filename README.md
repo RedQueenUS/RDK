@@ -408,6 +408,7 @@ Finally, while React has implemented things such as the Context API, and Redux i
 We suggest the following structure for your files, but you do you (at your own peril). If you do it your way and it works, please pat yourself on the back, give yourself a belly rub, and then consider sharing it with the community!
 
 Here's how we break down our `src/` folder:
+
 | Folder | Purpose | Details |
 | --- | --- | --- |
 | `src/assets/` | Images And Other Stuff | Your project is going to have images, they probably go here. If for some reason they don't go here, they might go in the `public/` folder that sits next to `src/`. If that's confusing, do whatever feels comfortable. |
