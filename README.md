@@ -264,7 +264,7 @@ import {
     onClickCreateSquareButton,
     onClickCreateCircleButton,
     onClickCreateImageButton
-} from "./MyComponentActions";
+} from "./MyComponentReducer";
 
 // Define class to contain React Component, and extend base Component class
 class MyComponentToolbar extends Component{
@@ -304,7 +304,7 @@ export default connect(mapStateToProps, {
 })(MyComponentToolbar);
 ```
 
-Notice that instead of a single `onCreateShape` Action Dispatcher, there are now two dedicated Dispatchers: one for creating a square (`onClickCreateSquare`), and a different one for creating a circle (`onClickCreateCircle`). Also, instead of the `Action` Dispatchers explaining what the user is trying to do, now they explain what the User actually did: click a specific thing.
+Notice that instead of a single `onCreateShape` Action Dispatcher, there are now two dedicated Dispatchers: one for creating a square (`onClickCreateSquareButton`), and a different one for creating a circle (`onClickCreateCircleButton`). Also, instead of the `Action` Dispatchers explaining what the user is trying to do, now they explain what the User actually did: click a specific thing.
 
 To make this work, this component would be coupled with comparable `Actions` and `Reducers` combined in a single `MyComponentReducer.js` file, as shown below:
 
