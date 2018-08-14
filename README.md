@@ -23,30 +23,6 @@ To keep code organized and easy to read, these pieces are broken down into speci
 
 For example, with a componant named `MyComponent`, you can expect this folder `src/components/MyComponent` and it will contain the following files:
 
-- Default Export:
-
-    `index.js`
-
-    For easy importing, this file aliases the default export for the component. In most cases, this is the `default` export from `MyComponentContainer.js`
-
-Stateless Function:
-    MyComponent.js
-
-    This file should contain a stateless function, consisting primarily of JSX.
-
-Styling:
-    MyComponent.css
-
-Redux Container:
-    MyComponentContainer.js
-
-    This file connects the stateless component with the Redux Store. It will consist of: a `mapStateToProps(state, ownProps)`
-    function and a `mapDispatchToProps(dispatch)` function. These functions are both connected to Redux through a call to
-    `connect(mapStateToProps, mapDispatchToProps)(statelessComponent)`.
-
-Reducer & Actions:
-    MyComponentReducer.js
-
 | Filename | Purpose | Details |
 | --- | --- | --- |
 | `index.js` | Default Export | For easy importing, this file aliases the default export for the component. In most cases, this is the `default` export from `MyComponentContainer.js` |
