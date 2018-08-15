@@ -202,8 +202,8 @@ For example, here's a list created for a Rune with a button and a text input fie
 When a user changes the value of the `buildFormulaText`:
 
 - UI Event Type Constant: `CHANGE_BUILD_FORMULA_TEXT`
-- UI Event Dispatcher: `onChangeBuildForumlaText`
-- UI Event Handler: `handleChangeBuildForumlaText`
+- UI Event Dispatcher: `onChangeBuildFormulaText`
+- UI Event Handler: `handleChangeBuildFormulaText`
 
 When a user's focus leaves the `buildFormulaText`:
 
