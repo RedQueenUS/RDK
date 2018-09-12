@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Rune from "./RuneContainer";
-import "./index.css";
+import "./sass/main.css";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import { createLogger } from "redux-logger";

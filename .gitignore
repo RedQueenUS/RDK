@@ -25,3 +25,7 @@ yarn-error.log*
 
 # ignored for stashing notes, etc.
 /exclude
+
+
+# remove all CSS from source control
+src/**/*.css
