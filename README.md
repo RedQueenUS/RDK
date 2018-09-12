@@ -2,30 +2,55 @@
 
 A growing framework based on [React](https://reactjs.org/) and [Redux](https://redux.js.org/).
 
+## Getting Started
+
+Congratulations! You're ready to begin building your Rune!
+
+If you're an experienced web developer, the first thing you'll want to do is checkout this repository. Then navigate your command line to where you placed the files and run:
+```sh
+$ npm install
+$ npm start
+```
+
+If you're new to web development, the following section contains some notes and explanations for what's in this package and how to work with it.
+
+## Resources
+
+### JavaScript Fundamentals
+
+- [](https://github.com/getify/You-Dont-Know-JS)
+
+### React / Redux
+
+- [React: A popular JavaScript Framework by Facebook](https://github.com/facebook/react)
+- [Redux: A predictable State Container for JavaScript apps](https://github.com/reduxjs/redux)
+- [Official React bindings for Redux](https://github.com/reduxjs/react-redux)
+- [List of training projects to assist with learning React](https://github.com/ReactTraining)
+
 ## 1. Notes
 
 Things get started in `src/index.js`. Ultimately, this file pulls in `src/index.css` and imports the `Rune` component.
 
-The `Rune` component sets whether the Rune should load in `landscape` or `portrait` mode, and then engages the `Routes` defined in `src/routes/index.js`. The `Routes` control which components load, based on which "page" the user is attempting to view. Since most `Runes` should be a Single Page App (SPA), usually the only reason to change this file is to replace which React Component the default `Route` loads out of the box.
+The `Rune` component sets whether the Rune should load in `landscape` or `portrait` mode, and then engages the `Routes` defined in `src/routes/index.js`. The `Routes` control which components load, based on which view path the user is attempting to view. Since most Runes should be a Single Page App (SPA), they can usually get by with just a single route, and the only reason to change this file is to replace which React Component the default `Route` loads out of the box. While it is possible to make Runes with multiple pages, Runes run wrapped inside an iframe, which negates many of the benefits, since URL paths are never exposed to the user, or available for bookmarking.
 
 ## 1.1 Component Structure
 
 Components are made up of several parts. They include:
 
-- Export (`index.js`)
-- Stateless Component (In a file ending with: `*.js`)
+- Entry Point (`index.js`)
+- Functional Stateless Component (In a file ending with: `*.js`) [JavaScript function that accepts props and returns JSX](https://reactjs.org/docs/components-and-props.html)
 - Styling (In a file ending with: `*.css`)
 - Container (In a file ending with: `*Container.js`)
 - Actions (In a file ending with: `*Reducer.js`)
 - Reducers (In a file ending with: `*Reducer.js`)
 
-To keep code organized and easy to read, these pieces are broken down into specific files.
+To keep code organized and easy to read, we recommend breaking these pieces into specific files.
 
 For example, with a componant named `MyComponent`, you can expect this folder `src/components/MyComponent` and it will contain the following files:
 
 | Filename | Purpose | Details |
 | --- | --- | --- |
-| `index.js` | Default Export | For easy importing, this file aliases the default export for the component. In most cases, this is the `default` export from `MyComponentContainer.js` |
+| `index.js` | Default Entry Point | For easy importing, this file aliases the default export for the component. In most cases, this is the `default` export from `MyComponentContainer.js` |
 | `MyComponent.js` | Stateless Component | This file should contain a stateless function, consisting primarily of JSX. |
 | `MyComponent.css` | Styling | |
 | `MyComponentContainer.js` | Redux Container | Connects the stateless function with the Redux Store. `connect(mapStateToProps, mapDispatchToProps)(statelessFunction)` |
@@ -55,7 +80,7 @@ In other Redux implementations, `Actions` tend to relate to user behavior:
 export const CREATE_CANVAS_SHAPE = "CREATE_CANVAS_SHAPE";
 export const CREATE_CANVAS_IMAGE = "CREATE_CANVAS_IMAGE";
 
-// Action Dispatcher
+// Action Creator
 export function onCreateShape(shapeType) {
   return {
     type: CREATE_CANVAS_SHAPE,
@@ -63,7 +88,7 @@ export function onCreateShape(shapeType) {
   };
 }
 
-// Action Dispatcher
+// Action Creator
 export function onCreateImage(imageUrl) {
   return {
     type: CREATE_CANVAS_SHAPE,
@@ -136,19 +161,19 @@ Together, they might be used in a component, like this:
 */
 
 // Import React and Redux dependencies
-import React { Component } from "react";
+import React, { Component } from "react";
 import { connect } from "redux";
 
-// Import Action Dispatchers
+// Import Action Creators
 import {onCreateShape, onCreateImage} from "./MyComponentActions";
 
 // Define class to contain React Component, and extend base Component class
 class MyComponentToolbar extends Component{
   
   // Components require a render() function, which has access to: this.props.
-  // this.props is supplied action dispatchers, by the connect() call at the bottom of this file.
+  // this.props is supplied action creators, by the connect() call at the bottom of this file.
   render() {
-    // Deconstruct the action dispatchers from this.props;
+    // Destructure the action creators from this.props;
     const {onCreateShape, onCreateImage} = this.props;
 
     // Return the content to be rendered.
@@ -169,21 +194,24 @@ function mapStateToProps(state = {}, ownProps = {}) {
 }
 
 // Export the React Component
+//   The first parameter is the mapStateToProps function.
+//   The second parameter is an object that supplies Action Creators for dispatching.
+//   Finally, connect((state, ownProps) => {}, {}) actually returns a function, which is then passed the `MyComponentToolbar` component as a parameter.
+//
+//   Connect creates a wrapped MyComponentToolbar component that passes the Redux Store into mapStateToProps as the current State of the application, and feeds the returned value into the component, as props. Additionally, it supplements the supplied props with dispatch-ready Actions, which can be fired by onClick handlers inside your component.
 export default connect(mapStateToProps, {
   onCreateShape,
   onCreateImage
 })(MyComponentToolbar);
 ```
 
-Take note how a single `Action` Dispatcher (`onCreateShape`) is reused to create two different types of shapes. Also observe that there is only one `Reducer` Task and it's used to add both shapes and images to the imaginary canvas.
+Take note how a single `Action` Creator (`onCreateShape`) is reused to create two different types of shapes. Also observe that there is only one `Reducer` Task and it's used to add both shapes and images to the imaginary canvas.
 
 In this way, the defined `Actions` focus on what the user is trying to do (create a new thing) and the `Reducers` focus on how to update the Redux State to reflect what the user is trying to accomplish (adding a new thing to the canvasContents array).
 
 ### 1.2.2 Rune React/Redux Conventions
 
 To simplify the things new Runecrafters need to master before they can get started, we've created what we believe to be some simplified conventions.
-
-When creating a Rune, Runecrafters should identify User Interaction Events (UIE) they would like their Rune to support. A UIE consists of a UI element (noun) and event (verb). As a matter of style, these events are usually named after HTML counterparts, start with the word "on", and are followed by a description of the event that occurred.
 
 These nouns and verbs then get combined to create names for the 3 pieecs that make up a UIE definition:
 
@@ -219,9 +247,13 @@ When a user clicks the `computeButton`:
 
 Fortunately, these conventions map to established Redux principles:
 
-- UI Event Type Constants are the value supplied to the `action.type` property required on every Redux event.
+- UI Event Type Constants are the values supplied to the `action.type` property required on every Redux event.
 - UI Event Dispatchers are the functions typically exported from a Redux `actions` library, and should return an object with at least a `type` property.
 - UI Event Handlers are the Redux reducer functions a Redux developer is already familiar with.
+
+Following this convention simplifies tracing a User Behavior through the application, ensuring any one User Interaction will dispatch a predictable `Action` and it can be expected to trigger a predictable `Reducer`. 
+
+When creating a Rune, Runecrafters should identify User Interaction Events (UIE) they would like their Rune to support. A UIE consists of a UI element (noun) and event (verb). As a matter of style, these events are usually named after HTML counterparts, start with the word "on", and are followed by a description of the event that occurred.
 
 ### 1.2.3 Example UIE Implementation
 
@@ -236,10 +268,10 @@ NOTE: This is a simplified implementation, so it includes the `Stateless Compone
 */
 
 // Import React and Redux dependencies
-import React { Component } from "react";
+import React, { Component } from "react";
 import { connect } from "redux";
 
-// Import Action Dispatchers
+// Import Action Creators
 import {
     onClickCreateSquareButton,
     onClickCreateCircleButton,
@@ -250,9 +282,9 @@ import {
 class MyComponentToolbar extends Component{
   
   // Components require a render() function, which has access to: this.props.
-  // this.props is supplied action dispatchers, by the connect() call at the bottom of this file.
+  // this.props is supplied action creators, by the connect() call at the bottom of this file.
   render() {
-    // Deconstruct the action dispatchers from this.props;
+    // Destructure the action creators from this.props;
     const {
         onClickCreateSquareButton,
         onClickCreateCircleButton,
@@ -284,7 +316,7 @@ export default connect(mapStateToProps, {
 })(MyComponentToolbar);
 ```
 
-Notice that instead of a single `onCreateShape` Action Dispatcher, there are now two dedicated Dispatchers: one for creating a square (`onClickCreateSquareButton`), and a different one for creating a circle (`onClickCreateCircleButton`). Also, instead of the `Action` Dispatchers explaining what the user is trying to do, now they explain what the User actually did: click a specific thing.
+Notice that instead of a single `onCreateShape` Action Creator, there are now two dedicated Creators: one for creating a square (`onClickCreateSquareButton`), and a different one for creating a circle (`onClickCreateCircleButton`). Also, instead of the `Action` Creators explaining what the user is trying to do, now they explain what the User actually did: click a specific thing.
 
 To make this work, this component would be coupled with comparable `Actions` and `Reducers` combined in a single `MyComponentReducer.js` file, as shown below:
 
@@ -311,7 +343,7 @@ import { CanvasShape, CanvasImage } from "../models/Canvas";
 // Event Type (Redux Action Type)
 export const CLICK_CREATE_SQUARE_BUTTON = "CLICK_CREATE_SQUARE_BUTTON";
 
-// onFunction (Redux Action Dispatcher)
+// onFunction (Redux Action Creator)
 export function onClickCreateSquareButton() {
   return {
     type: CLICK_CREATE_SQUARE_BUTTON
@@ -337,7 +369,7 @@ function handleClickCreateSquareButton(state, action) {
 // Event Type (Redux Action Type)
 export const CLICK_CREATE_CIRCLE_BUTTON = "CLICK_CREATE_CIRCLE_BUTTON";
 
-// onFunction (Redux Action Dispatcher)
+// onFunction (Redux Action Creator)
 export function onClickCreateCircleButton() {
   return {
     type: CLICK_CREATE_CIRCLE_BUTTON
@@ -363,7 +395,7 @@ function handleClickCreateCircleButton(state, action) {
 // Event Type (Redux Action Type)
 export const CLICK_CREATE_IMAGE_BUTTON = "CLICK_CREATE_IMAGE_BUTTON";
 
-// onFunction (Redux Action Dispatcher)
+// onFunction (Redux Action Creator)
 export function onClickCreateImageButton(imageUrl) {
   return {
     type: CLICK_CREATE_IMAGE_BUTTON,
@@ -384,7 +416,7 @@ function handleClickCreateImageButton(state, action) {
   };
 }
 
-// Export main reducer function
+// Export main Redux Reducer function
 export const reducer = (state = {}, action) => {
   switch(action.type) {
     case CLICK_CREATE_SQUARE_BUTTON:
@@ -399,7 +431,7 @@ export const reducer = (state = {}, action) => {
 };
 ```
 
-This convention simplifies tracing a User Behavior through the application, ensuring any one User Interaction will dispatch a predictable `Action` and it can be expected to trigger a predictable `Reducer`. Further, since these functions are so tightly coupled and similarly named, we recommend placing the `Event Type`, `onFunction`, and `handleFunction` in the `*Reducers.js` file, adjacent to one another. This ensures that if a developer changes one, they will likely notice the other two and be able to keep them all in sync.
+Since these functions are so tightly coupled and similarly named, we recommend placing the `Event Type`, `onFunction`, and `handleFunction` in the `*Reducers.js` file, adjacent to one another. This ensures that if a developer changes one, they will likely notice the other two and be able to keep them all in sync.
 
 Finally, while React has implemented things such as the Context API, and Redux is often more power than might be necessary, this approach reduces learning barriers for new developers, by teaching a single consistent way for handling both local and global scopes, without having to learn multiple techniques and the nuanced situations when to use each. Meanwhile, experienced developers and highly complex Runes are encouraged to employ whatever patterns and conventions are comfortable and efficient.
 
@@ -453,11 +485,3 @@ Make sure to update these values:
 - `meta` : `application-name`
 - `title`
 - add `<link>` and `<script>` tags where appropriate
-
-## 2. Getting Started
-
-Congratulations! You're ready to begin building your Rune! The first thing you'll want to do is checkout this repository. Then navigate your command line to where you placed the files and run:
-```sh
-$ npm install
-$ npm start
-```
