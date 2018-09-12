@@ -1,0 +1,60 @@
+*,
+*::after ,
+*::before {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+    background: #000;
+    font-family: 'Open Sans', sans-serif;
+    padding: 0;
+    margin: 0 auto;
+    font-size: 62.5%;  /* 10px === 1rem */
+
+    h1, h2, h3, h4, h5 {
+        font-family: 'Share Tech', sans-serif;
+    }
+}
+
+body {
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#root {
+    height: 100%;
+    width: 100%;
+    display: block;
+    position: relative;
+}
+
+.rune {
+    background: #222;
+    color: #eee;
+    width: 1200px;
+}
+
+.landscape {
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 100%;
+    flex-direction: row;
+    width: 1200px;
+    max-width: 120rem;
+    display: block;
+    height: 675px;
+    margin: 0 auto;
+}
+
+.portrait {
+    width: 675px;
+    max-width: 67.5rem;
+    height: 100%;
+    margin: 0 auto;
+}
