@@ -7,9 +7,10 @@ A growing framework based on [React](https://reactjs.org/) and [Redux](https://r
 Congratulations! You're ready to begin building your Rune!
 
 If you're an experienced web developer, the first thing you'll want to do is checkout this repository. Then navigate your command line to where you placed the files and run:
+
 ```sh
-$ npm install
-$ npm start
+npm install
+npm start
 ```
 
 If you're new to web development, the following section contains some notes and explanations for what's in this package and how to work with it.
@@ -251,7 +252,7 @@ Fortunately, these conventions map to established Redux principles:
 - UI Event Dispatchers are the functions typically exported from a Redux `actions` library, and should return an object with at least a `type` property.
 - UI Event Handlers are the Redux reducer functions a Redux developer is already familiar with.
 
-Following this convention simplifies tracing a User Behavior through the application, ensuring any one User Interaction will dispatch a predictable `Action` and it can be expected to trigger a predictable `Reducer`. 
+Following this convention simplifies tracing a User Behavior through the application, ensuring any one User Interaction will dispatch a predictable `Action` and it can be expected to trigger a predictable `Reducer`.
 
 When creating a Rune, Runecrafters should identify User Interaction Events (UIE) they would like their Rune to support. A UIE consists of a UI element (noun) and event (verb). As a matter of style, these events are usually named after HTML counterparts, start with the word "on", and are followed by a description of the event that occurred.
 
