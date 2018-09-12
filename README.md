@@ -18,7 +18,7 @@ If you're new to web development, the following section contains some notes and 
 
 ### JavaScript Fundamentals
 
-- [](https://github.com/getify/You-Dont-Know-JS)
+- [You Don't Know JS](https://github.com/getify/You-Dont-Know-JS)
 
 ### React / Redux
 
