@@ -7,7 +7,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import { createLogger } from "redux-logger";
 import { composeWithDevTools } from "redux-devtools-extension";
 import reducers from "./reducers";
-import { initialState } from "./store";
+import initialState from "./store";
 import injectTapEventPlugin from "react-tap-event-plugin";
 
 const composeEnhancers = (process.env.NODE_ENV !== "production" && window.__REDUX_DEVTOOLS_EXTENSION__)

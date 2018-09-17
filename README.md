@@ -1,4 +1,4 @@
-# Red Queen Rune Development Kit (RDK) v1.0
+# Red Queen Rune Development Kit (RDK) v1.1
 
 A growing framework based on [React](https://reactjs.org/) and [Redux](https://redux.js.org/).
 
