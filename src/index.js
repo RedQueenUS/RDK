@@ -8,7 +8,6 @@ import { createLogger } from "redux-logger";
 import { composeWithDevTools } from "redux-devtools-extension";
 import reducers from "./reducers";
 import initialState from "./store";
-import injectTapEventPlugin from "react-tap-event-plugin";
 
 const composeEnhancers = (process.env.NODE_ENV !== "production" && window.__REDUX_DEVTOOLS_EXTENSION__)
     ? composeWithDevTools({
@@ -26,8 +25,6 @@ const store = createStore(
         )
     )
 );
-
-injectTapEventPlugin();
 
 export const RUNE_ID = "12341234-1234-1234-1234-123412341234";
 
