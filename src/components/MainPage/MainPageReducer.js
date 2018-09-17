@@ -26,6 +26,7 @@ const handleInitializeUserSession = (state = {}, {payload}) => {
 export const initializeUserSession = createUIEHandler(INITIALIZE_USER_SESSION, onInitializeUserSession, handleInitializeUserSession);
 
 
+
 const CLICK_FAVORITE_TOGGLE = "CLICK_FAVORITE_TOGGLE";
 const onClickFavoriteToggle = (id) => {
     return {
