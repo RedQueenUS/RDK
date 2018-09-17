@@ -1,20 +1,11 @@
-export const ACTIONS = {
-    CLICK_LEFT: "CLICK_LEFT",
-    CLICK_RIGHT: "CLICK_RIGHT"
-};
+import {createUIEHandler} from '../../utils/index';
 
-export const onClickLeft = () => {
+const CLICK_LEFT = "CLICK_LEFT";
+const onClickLeft = () => {
     return {
-        type: ACTIONS.CLICK_LEFT
-    };
-};
 
-export const onClickRight = () => {
-    return {
-        type: ACTIONS.CLICK_RIGHT
-    };
+    }
 };
-
 const handleClickLeft = (state, action) => {
     const {clicks} = state;
     const {left, right} = clicks;
@@ -26,7 +17,16 @@ const handleClickLeft = (state, action) => {
         }
     };
 };
+export const clickLeft = createUIEHandler(CLICK_LEFT, onClickLeft, handleClickLeft);
 
+
+
+const CLICK_RIGHT = "CLICK_RIGHT";
+const onClickRight = () => {
+    return {
+
+    }
+};
 const handleClickRight = (state, action) => {
     const {clicks} = state;
     const {left, right} = clicks;
@@ -38,15 +38,32 @@ const handleClickRight = (state, action) => {
         }
     };
 };
+export const clickRight = createUIEHandler(CLICK_RIGHT, onClickRight, handleClickRight);
 
-const ACTION_HANDLERS = {
-    [ACTIONS.CLICK_LEFT]: handleClickLeft,
-    [ACTIONS.CLICK_RIGHT]: handleClickRight,
+
+
+export const UIEHandlers = {
+    [clickLeft.type]: clickLeft,
+    [clickRight.type]: clickRight,
+    getType: function (actionType) {
+        return this[actionType].type;
+    },
+    getOnFunction: function (actionType) {
+        return this[actionType].onFunction;
+    },
+    getHandlerFunction: function (actionType) {
+        return this[actionType].handleFunction;
+    }
 };
 
 const defaultState = {};
 
 export const reducer = (state = defaultState, action) => {
-    const handler = ACTION_HANDLERS[action.type];
-    return handler ? handler(state, action) : state;
+    const {type} = action;
+    if (!UIEHandlers.hasOwnProperty(type)) {
+        return state;
+    }
+
+    const handlerFunction = UIEHandlers.getHandlerFunction(type);
+    return handlerFunction(state, action);
 };
