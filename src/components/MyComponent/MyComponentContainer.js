@@ -2,7 +2,9 @@ import { connect } from 'react-redux';
 import MyComponent from './MyComponent';
 import {clickLeft, clickRight} from "./MyComponentReducer";
 
-const mapStateToProps = (state, ownProps) => {
+const defaultState = {MyComponent: {clicks: {left: 2, right: 3}}};
+
+const mapStateToProps = (state = defaultState, ownProps) => {
     const {MyComponent} = state;
     const {clicks} = MyComponent;
 

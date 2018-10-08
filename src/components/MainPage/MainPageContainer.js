@@ -1,8 +1,10 @@
-import { connect } from 'react-redux' 
+import { connect } from 'react-redux'
 import MainPage from './MainPage';
 import { preloadInitialState, initializeUserSession } from './MainPageReducer';
 
-const mapStateToProps = (state, ownProps) => {
+const defaultState = {stateInitialization: {isInitialized: false}};
+
+const mapStateToProps = (state = defaultState, ownProps) => {
     const {stateInitialization} = state;
     const {isInitialized} = stateInitialization;
     const {initialState, DefaultComponent, match} = ownProps;
