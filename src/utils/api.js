@@ -1,4 +1,4 @@
-import {RUNE_ID} from "../";
+import {RUNE_ID} from "../Rune";
 
 const API_URL = `https://api.redqueen.us/v1`;
 const makeGetRuneSlatesUrl = () => {return `${API_URL}/slates/${RUNE_ID}`;};

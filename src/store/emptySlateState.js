@@ -1,4 +1,4 @@
-import { RUNE_ID } from "..";
+import { RUNE_ID } from "../Rune";
 
 const emptySlateState = {
     "mainPageReducer": {

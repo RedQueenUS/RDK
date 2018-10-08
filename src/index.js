@@ -26,8 +26,6 @@ const store = createStore(
     )
 );
 
-export const RUNE_ID = "12341234-1234-1234-1234-123412341234";
-
 ReactDOM.render(
     <Provider store={store}>
         <Rune />
