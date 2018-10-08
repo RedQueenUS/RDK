@@ -21,10 +21,10 @@ class MainPage extends Component {
     }
 
     render() {
-        const {ComponentToLoad, slateId} = this.props;
+        const {ComponentToLoad} = this.props;
         return (
             <div className="MainPage">
-                <ComponentToLoad slateId={slateId} />
+                <ComponentToLoad {...this.props} />
             </div>
         )
     }
