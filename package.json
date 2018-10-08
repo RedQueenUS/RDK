@@ -14,7 +14,7 @@
   "license": "",
   "private": true,
   "dependencies": {
-    "babel-eslint": "^8.2.6",
+    "babel-eslint": "^9.0.0",
     "classnames": "^2.2.5",
     "eslint-plugin-react": "^7.10.0",
     "moment": "^2.22.2",
@@ -27,7 +27,7 @@
     "react-modal": "^3.4.4",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "^1.1.1",
+    "react-scripts": "^2.0.0",
     "react-timestamp": "^4.4.0",
     "redux": "^4.0.0",
     "uuid": "^3.2.1"
