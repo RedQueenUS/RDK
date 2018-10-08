@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from "react-redux";
-import Rune from "./Rune";
+import Rune from "./RuneContainer";
 import { initialState } from "./store";
 
 describe("Rune", () => {
