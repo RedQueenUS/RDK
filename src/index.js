@@ -1,34 +1,37 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import Rune from "./RuneContainer";
-import "./sass/main.css";
-import { Provider } from "react-redux";
-import { createStore, applyMiddleware, compose } from "redux";
-import { createLogger } from "redux-logger";
-import { composeWithDevTools } from "redux-devtools-extension";
-import reducers from "./reducers";
-import initialState from "./store";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { ApolloProvider } from 'react-apollo';
+import ApolloClient from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloLink } from 'apollo-link';
+import { withClientState } from 'apollo-link-state';
 
-const composeEnhancers = (process.env.NODE_ENV !== "production" && window.__REDUX_DEVTOOLS_EXTENSION__)
-    ? composeWithDevTools({
-        actionsBlacklist: [/* actions to be ignored in Redux DevTools */]
-    })
-    : compose;
 
-const store = createStore(
-    reducers,
-    initialState,
-    composeEnhancers(
-        applyMiddleware(
-            createLogger()
-            //sagaMiddleware
-        )
-    )
-);
+import defaultState from './apollo/defaultState';
+import resolvers from './apollo/resolvers';
+import App from './App';
+import './sass/main.scss';
+
+const cache = new InMemoryCache();
+
+const stateLink = withClientState({
+    cache,
+    defaults: defaultState,
+    resolvers,
+});
+
+const client = new ApolloClient({
+    cache,
+    link: ApolloLink.from([
+        stateLink
+    ])
+});
 
 ReactDOM.render(
-    <Provider store={store}>
-        <Rune />
-    </Provider>,
-    document.getElementById("root")
+    <ApolloProvider client={client}>
+        <App />
+    </ApolloProvider>
+    , document.getElementById('root')
 );
+
+
