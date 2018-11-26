@@ -3,20 +3,31 @@
 *::before {
     margin: 0;
     padding: 0;
-    box-sizing: inherit;
 }
 
 html {
     height: 100%;
     width: 100%;
-    background: #000;
-    font-family: 'Open Sans', sans-serif;
+    
+    font-family: sans-serif;
     padding: 0;
     margin: 0 auto;
     font-size: 62.5%;  /* 10px === 1rem */
 
+    @include respond(tablet-landscape) {
+        font-size: 56.25%; // 1rem === 9px
+    }
+
+    @include respond(tablet-portrait) {
+        font-size: 50%; // 1rem === 8px
+    }   
+
+    @include respond(big-desktop) {
+        font-size: 75%; // 1rem === 12px
+    }
+
     h1, h2, h3, h4, h5 {
-        font-family: 'Share Tech', sans-serif;
+        font-family: sans-serif;
     }
 }
 
@@ -25,8 +36,18 @@ body {
     padding: 0;
     width: 100%;
     height: 100%;
+    overflow: hidden;
 
-    box-sizing: border-box;
+    & a {
+        &:after,
+        &:visited {
+            text-decoration: none;
+        }
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
 }
 
 #root {
@@ -39,20 +60,38 @@ body {
 .rune {
     background: #222;
     color: #eee;
-    min-width: fit-content;
-    max-height: 100%;
-    min-height: 100%;
-    overflow: auto;
+    height: 100%;
+    margin: 3px;
 }
 
 .landscape {
-    max-width: 1200px;
-    // max-height: 675px;
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 100%;
+    width: 1200px;
+    max-width: 120rem;
+    display: block;
+    height: 675px;
     margin: 0 auto;
 }
 
 .portrait {
-    max-width: 675px;
-    // max-height: 1200px;
-    margin: 0 auto;    
+    width: 675px;
+    max-width: 67.5rem;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.row {
+    display: flex;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.hide {
+    display: none;
 }
