@@ -5,6 +5,7 @@ import ApolloClient from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloLink } from 'apollo-link';
 import { withClientState } from 'apollo-link-state';
+import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 
 
 import defaultState from './apollo/defaultState';
@@ -29,7 +30,9 @@ const client = new ApolloClient({
 
 ReactDOM.render(
     <ApolloProvider client={client}>
-        <App />
+        <ApolloHooksProvider client={client}>
+            <App />
+        </ApolloHooksProvider>        
     </ApolloProvider>
     , document.getElementById('root')
 );
