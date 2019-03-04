@@ -1,7 +1,7 @@
 import React from 'react';
-import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
+import { useQuery, useMutation } from 'react-apollo-hooks';
 
 const GET_COUNTER = gql`
     {
@@ -21,27 +21,21 @@ const INCREMENT_COUNT = gql`
 `;  
 
 const Counter = () => {
-    return ( 
-        <Query query={GET_COUNTER}>
-            {({ data }) => {
-                const { counter } = data;
-                const { count, incrementBy } = counter;
-
-                return (
-                    <Mutation mutation={INCREMENT_COUNT} variables={counter}>
-                        {incrementCount => (
-                            <div>
-                                <h1>{count}</h1>
-                                <button onClick={incrementCount}>Increment by {incrementBy}</button>                    
-                                <Link to="/form">Form</Link>
-                            </div>   
-                        )}                 
-                    </Mutation>
-                )
-            }}
-
-        </Query>
-
+    const { data, loading, error } = useQuery(GET_COUNTER);
+    const { counter } = data;
+    const incrementCount = useMutation(INCREMENT_COUNT, { 
+        variables: counter
+    });
+    
+    if (error) return <h1>Error...</h1>
+    if (loading) return <h1>Loading...</h1>
+    const { count, incrementBy } = counter;
+    return (
+        <div>
+            <h1>{count}</h1>
+            <button onClick={incrementCount}>Increment by {incrementBy}</button>                    
+            <Link to="/form">Form</Link>
+        </div>
      );
 }
  

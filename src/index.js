@@ -1,37 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ApolloProvider } from 'react-apollo';
 import ApolloClient from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloLink } from 'apollo-link';
-import { withClientState } from 'apollo-link-state';
+import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 
+// import { ApolloProvider } from 'react-apollo';
 
-import defaultState from './apollo/defaultState';
 import resolvers from './apollo/resolvers';
 import App from './App';
 import './sass/main.scss';
 
 const cache = new InMemoryCache();
-
-const stateLink = withClientState({
-    cache,
-    defaults: defaultState,
+const client = new ApolloClient({
+    cache,    
     resolvers,
 });
-
-const client = new ApolloClient({
-    cache,
-    link: ApolloLink.from([
-        stateLink
-    ])
-});
+cache.writeData({
+    data: {
+        counter: {
+            __typename: 'Counter',
+            count: 0,
+            incrementBy: 1
+        }
+    }
+})
 
 ReactDOM.render(
-    <ApolloProvider client={client}>
-        <App />
-    </ApolloProvider>
+        <ApolloHooksProvider client={client}>
+            <App />
+        </ApolloHooksProvider>        
     , document.getElementById('root')
 );
+
+// Make note that we're using ApolloProvider from react-apollo-hooks and that you can use Hook. 
 
 
