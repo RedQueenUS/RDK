@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ApolloProvider } from 'react-apollo';
 import ApolloClient from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
+
+// import { ApolloProvider } from 'react-apollo';
 
 import resolvers from './apollo/resolvers';
 import App from './App';
@@ -25,12 +26,12 @@ cache.writeData({
 })
 
 ReactDOM.render(
-    <ApolloProvider client={client}>
         <ApolloHooksProvider client={client}>
             <App />
         </ApolloHooksProvider>        
-    </ApolloProvider>
     , document.getElementById('root')
 );
+
+// Make note that we're using ApolloProvider from react-apollo-hooks and that you can use Hook. 
 
 
