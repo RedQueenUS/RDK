@@ -5,6 +5,7 @@ const StyledCardHeader = styled.div`
     height: 50%;
     width: 100%;
     display: flex;
+    background: ${props => props.background}
 `;
 
 const CardHeader = (props) => {

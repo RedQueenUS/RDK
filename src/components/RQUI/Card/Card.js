@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const StyledCard = styled.div`
     height: ${props => props.height || 'auto'};
     width: ${props => props.width || 'auto'};
+    background: ${props => props.background};
     border-radius: .4rem;
     box-shadow: 3px 5px 5px #aaaaaa;
     display: flex;

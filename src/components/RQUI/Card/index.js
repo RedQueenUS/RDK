@@ -1,5 +1,5 @@
 import Card from './Card';
 import CardHeader from './CardHeader';
-import CardFooter from './CardFooter';
+import CardContent from './CardContent';
 
-export { Card, CardHeader, CardFooter };
+export { Card, CardHeader, CardContent };

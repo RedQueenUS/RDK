@@ -1,5 +1,5 @@
-import { Card, CardHeader, CardFooter } from './Card';
+import { Card, CardHeader, CardContent } from './Card';
 import { Button } from './Button';
 
 
-export { Card, CardHeader, CardFooter, Button };
+export { Card, CardHeader, CardContent, Button };

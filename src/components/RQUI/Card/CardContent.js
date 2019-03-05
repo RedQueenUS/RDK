@@ -8,9 +8,10 @@ const StyledCardFooter = styled.div`
     align-items: center;
     justify-content: center;
     font-size: ${props => props.fontSize || '1.4rem'}
+    background: ${props => props.background}
 `;
 
-const CardFooter = (props) => {
+const CardContent = (props) => {
     const { children } = props;
     return (
         <StyledCardFooter {...props}>
@@ -19,4 +20,4 @@ const CardFooter = (props) => {
     )
 };
 
-export default CardFooter;
+export default CardContent;
