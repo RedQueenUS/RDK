@@ -6,17 +6,18 @@
 Create Reusable components IE Card / Button / Table / Input ( Go through other Runes and pick out common Component occurances)
     [x] Card
     [x] Button
-    [ ] Table
-    [ ] Input
+    [] Table
+    [] Input
+    [] Navbar
 
 Build out components
-    [] TaskList
+    [x] TaskList
     [] Fetch Examples
-    [] Documentation
+    [x] Documentation
     [] Asset Gallery
 
 Create Documentation for 
-    [] Card
+    [x] Card
     [] Project itself 
 
 [] Wire up Apollo Server w/ RESTDataSource 

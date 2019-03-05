@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Navbar from '../Navbar/Navbar';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Navbar } from '../RQUI';
 
 const HeaderDiv = styled.div`
     display: flex;
@@ -18,7 +19,13 @@ class Main extends Component {
                 {
                     !DefaultComponent ? (
                         <div> 
-                            <Navbar />
+                            <Navbar>
+                                <Link to="/">Home</Link>
+                                <Link to="/task-list">Task List</Link>
+                                <Link to="/fetch-example">Fetch Example</Link>
+                                <Link to="/documentation">Documentation</Link>
+                                <Link to="/asset-gallery">Asset Gallery</Link>
+                            </Navbar>
                             <HeaderDiv>
                                 <h1>Welcome Runecrafter!</h1>
                             </HeaderDiv>
@@ -27,7 +34,13 @@ class Main extends Component {
                     )
                     : (
                         <div>
-                            <Navbar />
+                            <Navbar>
+                                <Link to="/">Home</Link>
+                                <Link to="/task-list">Task List</Link>
+                                <Link to="/fetch-example">Fetch Example</Link>
+                                <Link to="/documentation">Documentation</Link>
+                                <Link to="/asset-gallery">Asset Gallery</Link>
+                            </Navbar>
                             <DefaultComponent /> 
                         </div>
                     )

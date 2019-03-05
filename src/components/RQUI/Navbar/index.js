@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const StyledNav = styled.nav`
@@ -7,7 +6,7 @@ const StyledNav = styled.nav`
     align-items: center;
     justify-content: space-around;
     height: 8rem;
-    background: red;
+    background: ${props => props.background || 'red'};
     font-size: 14px;
 
     & a {
@@ -30,19 +29,15 @@ const StyledNav = styled.nav`
     }
 `
 
-const Navbar = () => {
-  return (
-    <StyledNav>
-        <Link to="/">Home</Link>
-        <Link to="/task-list">Task List</Link>
-        <Link to="/fetch-example">Fetch Example</Link>
-        <Link to="/documentation">Documentation</Link>
-        <Link to="/asset-gallery">Asset Gallery</Link>
-    </StyledNav>
-  )
-}
+export const Navbar = (props) => {
+    const { children } = props
+    return (
+        <StyledNav {...props}>
+            {children}
+        </StyledNav>
+    )
+};
 
-export default Navbar
 
 
 

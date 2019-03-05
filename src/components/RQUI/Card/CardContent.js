@@ -7,7 +7,7 @@ const StyledCardFooter = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: ${props => props.fontSize || '1.4rem'}
+    font-size: ${props => props.fontSize || '1.4rem'};
     background: ${props => props.background}
 `;
 
