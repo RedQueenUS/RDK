@@ -24,3 +24,7 @@ Create Documentation for
 
 rafc - import React and arrow function component
 rcc - import React and class based component
+
+# Notes for documentation
+- Make note of how to style custom RQUI Components with styled components or SASS.
+``` const StyledCard = styled(Card)`` ```
