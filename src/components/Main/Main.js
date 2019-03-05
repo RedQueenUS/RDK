@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
+import styled from 'styled-components';
+
+const HeaderDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10rem;
+    font-size: 1.7rem;
+`
 
 class Main extends Component {
     render() {
@@ -11,6 +19,11 @@ class Main extends Component {
                     !DefaultComponent ? (
                         <div> 
                             <Navbar />
+                            <HeaderDiv>
+                                <h1>Welcome Runecrafter!</h1>
+                                <Card width="300px" height="300px"></Card>
+                            </HeaderDiv>
+                            
                         </div>
                     )
                     : (

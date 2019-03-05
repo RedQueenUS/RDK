@@ -4,13 +4,13 @@ import styled from 'styled-components';
 const StyledCardHeader = styled.div`
     height: 50%;
     width: 100%;
-    background: black;
     display: flex;
 `;
 
-const CardHeader = ({ children }) => {
+const CardHeader = (props) => {
+    const { children } = props;
     return (
-        <StyledCardHeader>
+        <StyledCardHeader {...props}>
             {children}
         </StyledCardHeader>
     )

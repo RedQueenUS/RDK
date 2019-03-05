@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledCard = styled.div`
-    height: ${props => props.height || '300px'};
-    width: ${props => props.width || '300px'};
+    height: ${props => props.height || 'auto'};
+    width: ${props => props.width || 'auto'};
     border-radius: .4rem;
-    box-shadow: 10px 10px 5px #aaaaaa;
+    box-shadow: 3px 5px 5px #aaaaaa;
     display: flex;
     flex-direction: column;
 `
@@ -20,3 +20,4 @@ const Card = (props) => {
 };
 
 export default Card;
+
