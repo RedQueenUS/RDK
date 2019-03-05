@@ -9,18 +9,20 @@ class Main extends Component {
                 {
                     !DefaultComponent ? (
                         <div>
-                            <Link to="/counter">To the Counter</Link>
-                            <Link to="/form">To the Increment form</Link>
+                            <Link to="/task-list">Task List</Link>
+                            <Link to="/fetch-example">Fetch Example</Link>
+                            <Link to="/documentation">Documentation</Link>
+                            <Link to="/asset-gallery">Asset Gallery</Link>
                         </div>
                     )
                     : (
                         <DefaultComponent /> 
                     )
-                }
-                               
+                }                                            
             </div>                                                    
         )
     };
 };
  
 export default Main;
+
