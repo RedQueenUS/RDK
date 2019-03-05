@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Navbar from '../Navbar/Navbar';
 
 class Main extends Component {
     render() {
@@ -8,15 +9,15 @@ class Main extends Component {
             <div>
                 {
                     !DefaultComponent ? (
-                        <div>
-                            <Link to="/task-list">Task List</Link>
-                            <Link to="/fetch-example">Fetch Example</Link>
-                            <Link to="/documentation">Documentation</Link>
-                            <Link to="/asset-gallery">Asset Gallery</Link>
+                        <div> 
+                            <Navbar />
                         </div>
                     )
                     : (
-                        <DefaultComponent /> 
+                        <div>
+                            <Navbar />
+                            <DefaultComponent /> 
+                        </div>
                     )
                 }                                            
             </div>                                                    

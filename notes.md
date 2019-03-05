@@ -8,7 +8,7 @@
     [ ] Table
     [ ] Input
 
-[] Build the Link list into a Navbar so it follows from screen to screen
+[] Build the Link list into a Navbar so it follows from screen to screen 
 
 [] Build out components
     [] TaskList
@@ -22,3 +22,6 @@
 
 [] Wire up Apollo Server w/ RESTDataSource 
 
+
+rafc - import React and arrow function component
+rcc - import React and class based component
