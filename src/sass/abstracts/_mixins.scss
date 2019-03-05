@@ -26,3 +26,24 @@
         @media (min-width: 112.5em) { @content }; // 1800px
     }
 }
+
+@mixin resetLinkStyles {
+    & a {
+        text-decoration: none;
+        color: white;
+
+        &::before {
+            text-decoration: none;
+        }
+
+        &::after{
+            text-decoration: none;
+        }
+
+        &:visited {
+            text-decoration: none;
+            color: white;
+        }
+
+    }
+}
