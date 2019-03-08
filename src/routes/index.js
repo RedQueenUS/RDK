@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+// Here we import any Components that we will be setting to specific routes
 import Main from '../components/Main/Main';
 import Counter from '../components/Counter/Counter';
 import IncrementForm from '../components/Counter/IncrementForm';
@@ -28,3 +29,5 @@ export default class Routes extends Component {
         )
     }
 }
+
+// The Main component is used as our component for the Route to render. It then takes a prop of DefaultComponent and consumes any component passed to display that.

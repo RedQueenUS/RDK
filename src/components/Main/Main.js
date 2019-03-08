@@ -11,6 +11,9 @@ const HeaderDiv = styled.div`
     font-size: 1.7rem;
 `;
 
+// In our Main component, we destructure the DefaultComponent passed in the props inside of Routes
+
+// Then in our JSX we check to make sure DefaultComponent has a value, if it does we render it. If not, we have a default render case (which is what our Main component renders)
 class Main extends Component {
     render() {
         const { DefaultComponent } = this.props;
